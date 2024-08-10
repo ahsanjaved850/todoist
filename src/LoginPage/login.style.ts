@@ -44,21 +44,18 @@ export const LogoWrapper = styled.div`
 // Styled TextField from Material UI
 export const StyledTextField = styled(TextField)`
   width: 100%;
+  height: 3rem;
 `;
 
 // Styled Button from Material UI
 export const StyledButton = styled(Button)`
   width: 100%;
-  background-color: #e44332;
-  margin-top: 1rem;
-  &:hover {
-    background-color: #c23628;
-  }
+  height: 3rem;
 `;
 
 // Toggle text and error messages
 export const ToggleText = styled.p`
-  margin-top: 1rem;
+  margin: 0;
   font-size: 0.9rem;
   text-align: center;
   color: #333;
@@ -86,4 +83,10 @@ export const LogoPic = styled.div`
     width: 450px;
     height: 245px;
   }
+`;
+
+export const FormDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 `;
