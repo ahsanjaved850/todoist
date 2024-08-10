@@ -5,6 +5,7 @@ import icon from "/todoist.svg";
 import { loginPic } from "../utils/constants";
 import {
   ErrorMsg,
+  FormDiv,
   FormWrapper,
   LoginContainer,
   LogoPic,
@@ -31,14 +32,17 @@ const Login: React.FC = () => {
     const message = valideUserInfo(refEmail, refPassword, refUserName);
     if (message) {
       setErrorMsg(message);
+      return;
     }
 
     if (signinFrom) {
       const signIn = loginAuth(refEmail, refPassword);
       if (signIn) setErrorMsg(signIn);
+      return;
     } else {
       const signUp = signupAuth(refUserName, refEmail, refPassword);
       if (signUp) setErrorMsg(signUp);
+      return;
     }
   };
 
@@ -54,7 +58,7 @@ const Login: React.FC = () => {
           <h1>todoist</h1>
         </LogoWrapper>
         <h2>{signinFrom ? "Log in" : "Sign up"}</h2>
-        <form>
+        <FormDiv>
           {!signinFrom && (
             <StyledTextField
               inputRef={userName}
@@ -92,7 +96,7 @@ const Login: React.FC = () => {
               {signinFrom ? "Sign up" : "Sign in"}
             </span>
           </ToggleText>
-        </form>
+        </FormDiv>
       </FormWrapper>
       <LogoPic>
         <img src={loginPic} alt="LoginPic" />
