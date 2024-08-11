@@ -10,6 +10,7 @@ export const LoginContainer = styled.div`
   height: 100vh;
   padding: 24px;
   gap: 3rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 `;
 
 // Form wrapper with custom styling for inputs and buttons
@@ -21,7 +22,7 @@ export const FormWrapper = styled.div`
   max-width: 400px;
 
   h2 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 `;
 

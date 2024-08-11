@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { valideUserInfo } from "./validateUserInfo";
 import { loginAuth, signupAuth } from "./userAuthentication";
 import icon from "/todoist.svg";
-import { loginPic } from "../utils/constants";
+import { loginPic } from "../../utils/constants";
 import {
   ErrorMsg,
   FormDiv,

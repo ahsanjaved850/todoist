@@ -5,12 +5,17 @@ import {
   RouteObject,
   RouterProvider,
 } from "react-router-dom";
-import Login from "./LoginPage/Login";
+import Login from "./components/LoginPage/Login";
+import Layout from "./components/Layout/Layout";
 
 const routes: RouteObject[] = [
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "/layout",
+    element: <Layout />,
   },
 ];
 
