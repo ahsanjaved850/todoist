@@ -6,6 +6,7 @@ import {
   LeftWindow,
   Name,
   Project,
+  Tasks,
   Today,
 } from "./layout.style";
 import {
@@ -62,17 +63,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             Total tasks
           </h5>
         </div>
-        <ul>
-          <li>
-            <h3>
-              <span>
-                <FiCircle></FiCircle>
-              </span>
-              Task name
-            </h3>
+        <Tasks>
+          <span>
+            <FiCircle className="fi-circle" />
+            <FiCheckCircle className="fi-check-circle" />
+          </span>
+          <div>
+            <h3>Task name</h3>
             <p>Task Description</p>
-          </li>
-        </ul>
+          </div>
+        </Tasks>
         <p>
           <span>
             <FiPlus></FiPlus>
