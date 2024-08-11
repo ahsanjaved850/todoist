@@ -6,7 +6,7 @@ export const LayoutContainer = styled.div`
   color: #808080;
 `;
 
-export const LeftWindow = styled.div`
+export const FeaturesWindow = styled.div`
   margin-top: 20px;
   width: 350px;
   height: 100vh;
@@ -48,6 +48,7 @@ export const Name = styled.div`
     font-weight: 400;
   }
   li {
+    font-size: small;
     display: flex;
     flex-direction: row;
     gap: 4px;
@@ -66,16 +67,18 @@ export const Name = styled.div`
 `;
 
 export const AddTask = styled.li`
+  font-size: medium;
   display: flex;
   color: #e44332;
   font-weight: 400;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
   padding: 0.5rem;
   padding-left: 0px;
   gap: 3px;
 `;
 export const Today = styled.li`
+  font-size: medium;
   display: flex;
   gap: 3px;
   &:hover {
@@ -98,7 +101,7 @@ export const Project = styled.div`
     background-color: #f2efed;
   }
 `;
-export const ChildrenContainer = styled.div`
+export const TasksDisplayWindow = styled.div`
   width: 100%;
   margin-left: 300px;
   display: flex;
