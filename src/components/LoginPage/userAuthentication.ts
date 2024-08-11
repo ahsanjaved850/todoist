@@ -3,7 +3,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../utils/firebase";
+import { auth } from "../../utils/firebase";
 
 export const loginAuth = (email: string, password: string): string | null => {
   signInWithEmailAndPassword(auth, email, password)
