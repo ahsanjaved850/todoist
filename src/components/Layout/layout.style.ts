@@ -26,19 +26,24 @@ export const FeaturesWindow = styled.div`
   }
 `;
 export const Name = styled.div`
+  height: fit-content;
   text-decoration: underline;
-  padding: 0.9rem;
-  font-weight: 600;
   font-size: 18px;
-  color: #202020;
-  padding-bottom: 0px;
+  margin-top: 25px;
+  cursor: pointer;
   span {
+    margin-left: 6px;
+    padding: 0.5rem;
     color: #e44332;
     display: flex;
     align-items: center;
     gap: 5px;
+    &:hover {
+      background-color: #f2efed;
+    }
   }
   h4 {
+    font-weight: 500;
     color: #202020;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -46,14 +51,19 @@ export const Name = styled.div`
   ul {
     display: none;
     font-weight: 400;
+    margin: 0;
+    width: fit-content;
   }
   li {
+    margin-left: 35px;
+    cursor: pointer;
     font-size: small;
     display: flex;
     flex-direction: row;
     gap: 4px;
     font-weight: 400px;
     margin-top: 2px;
+    background-color: white;
     &:hover {
       text-decoration: underline;
     }
@@ -61,7 +71,6 @@ export const Name = styled.div`
   &:hover {
     ul {
       display: inline-block;
-      margin: 0px;
     }
   }
 `;
@@ -76,8 +85,10 @@ export const AddTask = styled.li`
   padding: 0.5rem;
   padding-left: 0px;
   gap: 3px;
+  cursor: pointer;
 `;
 export const Today = styled.li`
+  cursor: pointer;
   font-size: medium;
   display: flex;
   gap: 3px;
