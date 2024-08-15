@@ -2,11 +2,7 @@ import React from "react";
 import { Tasks, TasksDisplayWindow } from "./layout.style";
 import { FiCheckCircle, FiCircle, FiPlus } from "react-icons/fi";
 
-interface TasksDisplayContainerProps {
-  child: React.ReactNode;
-}
-
-const TasksDisplayContainer: React.FC<TasksDisplayContainerProps> = () => {
+const TasksDisplayContainer: React.FC = () => {
   return (
     <TasksDisplayWindow>
       <div>

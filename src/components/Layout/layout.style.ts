@@ -7,9 +7,8 @@ export const LayoutContainer = styled.div`
 `;
 
 export const FeaturesWindow = styled.div`
-  margin-top: 20px;
   width: 350px;
-  height: 100vh;
+  height: 98vh;
   background-color: #fcfaf8;
   ul {
     width: 100%;
@@ -92,9 +91,6 @@ export const Today = styled.li`
   font-size: medium;
   display: flex;
   gap: 3px;
-  &:hover {
-    color: #333333;
-  }
 `;
 
 export const Project = styled.div`
@@ -170,4 +166,16 @@ export const Tasks = styled.div`
   .fi-check-circle {
     display: none;
   }
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: auto;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
 `;

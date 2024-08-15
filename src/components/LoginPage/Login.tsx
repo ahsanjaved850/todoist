@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { valideUserInfo } from "./validateUserInfo";
 import { loginAuth, signupAuth } from "./userAuthentication";
 import icon from "/todoist.svg";
@@ -14,10 +14,14 @@ import {
   StyledTextField,
   ToggleText,
 } from "./login.style";
+import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "../../utils/firebase";
 
 const Login: React.FC = () => {
   const [signinFrom, setSigninForm] = useState<boolean>(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const userName = useRef<HTMLInputElement | null>(null);
   const email = useRef<HTMLInputElement | null>(null);
@@ -37,18 +41,41 @@ const Login: React.FC = () => {
 
     if (signinFrom) {
       const signIn = loginAuth(refEmail, refPassword);
-      if (signIn) setErrorMsg(signIn);
-      return;
+      if (signIn) {
+        setErrorMsg(signIn);
+        return;
+      } else {
+        navigate("/today");
+      }
     } else {
       const signUp = signupAuth(refUserName, refEmail, refPassword);
-      if (signUp) setErrorMsg(signUp);
-      return;
+      if (signUp) {
+        setErrorMsg(signUp);
+        return;
+      } else {
+        navigate("/today");
+      }
     }
   };
 
   const toggleForm = () => {
     setSigninForm(!signinFrom);
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
+      if (user) {
+        if (window.location.pathname === "/") {
+          navigate("/today");
+        }
+      } else {
+        if (window.location.pathname !== "/") {
+          navigate("/");
+        }
+      }
+    });
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <LoginContainer>

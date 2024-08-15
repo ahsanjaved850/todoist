@@ -1,17 +1,29 @@
-import React from "react";
-import { LayoutContainer } from "./layout.style";
+import React, { useState } from "react";
+import { LayoutContainer, Overlay } from "./layout.style";
 import FeaturesContainer from "./FeaturesContainer";
 import TasksDisplayContainer from "./TasksDisplayContainer";
+import AddTask from "../AddTask/AddTask";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+const Layout: React.FC = () => {
+  const [isAddTaskVisible, setAddTaskVisible] = useState(false);
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const handleAddTaskClick = () => {
+    setAddTaskVisible(true);
+  };
+
+  const handleCloseAddTask = () => {
+    setAddTaskVisible(false);
+  };
+
   return (
     <LayoutContainer>
-      <FeaturesContainer />
-      <TasksDisplayContainer child={children} />
+      <FeaturesContainer onAddTaskClick={handleAddTaskClick} />
+      <TasksDisplayContainer />
+      {isAddTaskVisible && (
+        <Overlay>
+          <AddTask onClose={handleCloseAddTask} />
+        </Overlay>
+      )}
     </LayoutContainer>
   );
 };
