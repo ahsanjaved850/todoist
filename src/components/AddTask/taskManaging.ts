@@ -1,12 +1,19 @@
 import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
 import { auth, storage } from "../../utils/firebase";
 
+interface Task {
+  name: string;
+  description: string;
+  date: string;
+  priority: string;
+}
+
 export const taskUploading = (
   taskName: string | undefined,
   taskDes: string | undefined,
   selectedDate: string,
   selectedPriority: string
-) => {
+): Promise<string | null> => {
   const user = auth.currentUser;
   const taskData = {
     name: taskName,
@@ -23,45 +30,39 @@ export const taskUploading = (
     });
     const file = new File([fileBlob], fileName, { type: "application/json" });
 
-    // Create a storage reference with the user's UID
     const storageRef = ref(storage, `${uid}/tasks/${file.name}`);
 
-    uploadBytes(storageRef, file)
-      .then(() => {
-        return "Uploaded a JSON file!";
-      })
+    return uploadBytes(storageRef, file)
+      .then(() => "Uploaded a JSON file!")
       .catch((error) => {
         console.log(error);
         return "Error uploading file:";
       });
   }
-  return null;
+  return Promise.resolve(null);
 };
 
-const retrieveAllTasks = async () => {
+export const retrieveAllTasks = async (): Promise<Task[]> => {
+  const tasksData: Task[] = [];
   const user = auth.currentUser;
+  try {
+    if (!user) throw new Error("User is not authenticated");
 
-  if (user) {
     const uid = user.uid;
     const tasksRef = ref(storage, `${uid}/tasks/`);
+    const result = await listAll(tasksRef);
 
-    try {
-      const result = await listAll(tasksRef);
-      const tasksData = [];
+    for (const itemRef of result.items) {
+      const downloadURL = await getDownloadURL(itemRef);
+      const response = await fetch(downloadURL);
+      if (!response.ok)
+        throw new Error(`Failed to fetch task: ${response.statusText}`);
 
-      for (const itemRef of result.items) {
-        const downloadURL = await getDownloadURL(itemRef);
-        const response = await fetch(downloadURL);
-        const taskData = await response.json();
-        tasksData.push(taskData);
-      }
-      console.log("Retrieved all task data:", tasksData);
-      return tasksData;
-    } catch (error) {
-      console.error("Error retrieving tasks:", error);
-      return null;
+      const taskData: Task = await response.json();
+      tasksData.push(taskData);
     }
+  } catch (error) {
+    console.error("Error retrieving tasks:", error);
   }
-  return null;
+  return tasksData;
 };
-retrieveAllTasks();
