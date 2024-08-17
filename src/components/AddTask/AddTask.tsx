@@ -23,6 +23,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
   const [selectedPriority, setSelectedPriority] = React.useState("Priority");
   const taskName = useRef<HTMLInputElement>(null);
   const taskDes = useRef<HTMLInputElement>(null);
+  const refTaskName = taskName.current?.value;
+  const refTaskDes = taskDes.current?.value;
 
   const handleDateChange = (event: SelectChangeEvent<unknown>) => {
     setSelectedDate(event.target.value as string);
@@ -31,19 +33,15 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
   const handlePriorityChange = (event: SelectChangeEvent<unknown>) => {
     setSelectedPriority(event.target.value as string);
   };
-  const refTaskName = taskName.current?.value;
-  const refTaskDes = taskDes.current?.value;
 
   const uploadTask = () => {
-    const uploaded: null | string = taskUploading(
+    const uploaded: Promise<null | string> = taskUploading(
       refTaskName,
       refTaskDes,
       selectedDate,
       selectedPriority
     );
-    if (uploaded) {
-      return;
-    }
+    console.log(uploaded);
     onClose();
   };
 

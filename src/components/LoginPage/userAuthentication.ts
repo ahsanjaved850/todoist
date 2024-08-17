@@ -18,29 +18,20 @@ export const loginAuth = (email: string, password: string): string | null => {
   return null;
 };
 
-export const signupAuth = (
+export const signupAuth = async (
   userName: string,
   email: string,
   password: string
-): string | null => {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential): string | null => {
-      const user = userCredential.user;
-
-      updateProfile(user, {
-        displayName: userName,
-      })
-        .then(() => {
-          //   profile updated
-        })
-        .catch((error) => {
-          return error.message;
-        });
-      return null;
-    })
-    .catch((error) => {
-      const errorMessage = error.message;
-      return errorMessage;
-    });
-  return null;
+): Promise<void> => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    await updateProfile(user, { displayName: userName });
+  } catch (error) {
+    console.error("Error signing up:", error);
+  }
 };

@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { LayoutContainer, Overlay } from "./layout.style";
 import FeaturesContainer from "./FeaturesContainer";
-import TasksDisplayContainer from "./TasksDisplayContainer";
 import AddTask from "../AddTask/AddTask";
 
-const Layout: React.FC = () => {
-  const [isAddTaskVisible, setAddTaskVisible] = useState(false);
+interface ChildProps {
+  refreshTask: boolean;
+  handleRefreshTasks: () => void;
+}
+
+interface LayoutProps {
+  children: ReactElement<ChildProps>;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const [isAddTaskVisible, setAddTaskVisible] = useState<boolean>(false);
+  const [refreshTask, setRefreshTask] = useState<boolean>(false);
 
   const handleAddTaskClick = () => {
     setAddTaskVisible(true);
@@ -13,12 +22,18 @@ const Layout: React.FC = () => {
 
   const handleCloseAddTask = () => {
     setAddTaskVisible(false);
+    setRefreshTask(true);
+  };
+
+  const handleRefreshTasks = () => {
+    setRefreshTask(false);
   };
 
   return (
     <LayoutContainer>
       <FeaturesContainer onAddTaskClick={handleAddTaskClick} />
-      <TasksDisplayContainer />
+      {React.isValidElement(children) &&
+        React.cloneElement(children, { refreshTask, handleRefreshTasks })}
       {isAddTaskVisible && (
         <Overlay>
           <AddTask onClose={handleCloseAddTask} />

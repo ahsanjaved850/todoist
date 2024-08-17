@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { valideUserInfo } from "./validateUserInfo";
 import { loginAuth, signupAuth } from "./userAuthentication";
 import icon from "/todoist.svg";
@@ -15,8 +15,6 @@ import {
   ToggleText,
 } from "./login.style";
 import { useNavigate } from "react-router-dom";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "../../utils/firebase";
 
 const Login: React.FC = () => {
   const [signinFrom, setSigninForm] = useState<boolean>(true);
@@ -27,7 +25,7 @@ const Login: React.FC = () => {
   const email = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
 
-  const handleSignIn = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const refUserName = userName.current?.value || "";
     const refEmail = email.current?.value || "";
@@ -39,43 +37,22 @@ const Login: React.FC = () => {
       return;
     }
 
-    if (signinFrom) {
-      const signIn = loginAuth(refEmail, refPassword);
-      if (signIn) {
-        setErrorMsg(signIn);
-        return;
+    try {
+      if (signinFrom) {
+        loginAuth(refEmail, refPassword);
+        navigate("/today");
       } else {
+        await signupAuth(refUserName, refEmail, refPassword);
         navigate("/today");
       }
-    } else {
-      const signUp = signupAuth(refUserName, refEmail, refPassword);
-      if (signUp) {
-        setErrorMsg(signUp);
-        return;
-      } else {
-        navigate("/today");
-      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const toggleForm = () => {
     setSigninForm(!signinFrom);
   };
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
-      if (user) {
-        if (window.location.pathname === "/") {
-          navigate("/today");
-        }
-      } else {
-        if (window.location.pathname !== "/") {
-          navigate("/");
-        }
-      }
-    });
-    return () => unsubscribe();
-  }, [navigate]);
 
   return (
     <LoginContainer>
