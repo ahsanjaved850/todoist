@@ -1,33 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Input as MuiInput } from "@mui/material";
 
-export const TasksDisplayWindow = styled.div`
-  width: 100%;
-  margin-left: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  margin-top: 50px;
-  h2 {
-    font-weight: 600;
-    color: black;
-    font-size: xx-large;
-    margin-bottom: 0;
-  }
-  h5 {
-    font-size: 16px;
-    font-weight: 400;
-    span {
-      color: #808080;
-      margin-right: 3px;
-    }
-  }
-
-  span {
-    margin-right: 3px;
-    color: #e44332;
-  }
-`;
 export const Tasks = styled.div<{ color: string }>`
   display: flex;
   flex-direction: row;

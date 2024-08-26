@@ -26,6 +26,15 @@ export const TasksDisplayWindow = styled.div`
     margin-right: 3px;
     color: #e44332;
   }
+  @media (max-width: 1300px) {
+    margin-left: 150px;
+  }
+  @media (max-width: 1000px) {
+    margin-left: 100px;
+  }
+  @media (max-width: 900px) {
+    margin-left: 50px;
+  }
 `;
 export const Tasks = styled.div<{ color: string }>`
   display: flex;

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { TaskDetails, Tasks, TasksDisplayWindow } from "./upcoming.style";
+import { TaskDetails } from "./upcoming.style";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
 import { deleteTask, retrieveAllTasks } from "../AddTask/taskManaging";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { priorityColors } from "../../utils/constants";
 import ShimmerUI from "../../utils/ShimmerUI";
+import { Tasks, TasksDisplayWindow } from "../Today/today.style";
 
 interface Task {
   name: string;

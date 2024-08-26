@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  AddTaskDiv,
-  ProjectWrapper,
-  Tasks,
-  TasksDisplayWindow,
-} from "./project.style";
+import { AddTaskDiv, ProjectWrapper, Tasks } from "./project.style";
 import { FiCheckCircle, FiCircle, FiPlus } from "react-icons/fi";
 import ShimmerUI from "../../utils/ShimmerUI";
 import { onAuthStateChanged } from "firebase/auth";
@@ -16,6 +11,7 @@ import {
   retrieveProjectTasks,
 } from "./projectTaskManagement";
 import { TaskDetails } from "../Upcoming/upcoming.style";
+import { TasksDisplayWindow } from "../Today/today.style";
 
 interface Task {
   name: string;

@@ -11,6 +11,11 @@ export const LoginContainer = styled.div`
   padding: 24px;
   gap: 3rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;
 
 // Form wrapper with custom styling for inputs and buttons
@@ -23,6 +28,10 @@ export const FormWrapper = styled.div`
 
   h2 {
     font-size: 2.2rem;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
   }
 `;
 
@@ -83,6 +92,10 @@ export const LogoPic = styled.div`
   img {
     width: 450px;
     height: 245px;
+  }
+
+  @media (max-width: 1050px) {
+    display: none;
   }
 `;
 

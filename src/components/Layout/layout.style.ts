@@ -23,6 +23,9 @@ export const FeaturesWindow = styled.div`
       background-color: #f2efed;
     }
   }
+  @media (max-width: 1000px) {
+    width: fit-content;
+  }
 `;
 export const Name = styled.div`
   height: fit-content;
