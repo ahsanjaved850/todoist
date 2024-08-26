@@ -8,6 +8,7 @@ import Login from "./components/LoginPage/Login";
 import Layout from "./components/Layout/Layout";
 import Today from "./components/Today/Today";
 import Upcoming from "./components/Upcoming/Upcoming";
+import Project from "./components/Project/Project";
 
 const App: React.FC = () => {
   const routes: RouteObject[] = [
@@ -28,6 +29,14 @@ const App: React.FC = () => {
       element: (
         <Layout>
           <Upcoming />
+        </Layout>
+      ),
+    },
+    {
+      path: "/myprojects/:projectName",
+      element: (
+        <Layout>
+          <Project />
         </Layout>
       ),
     },

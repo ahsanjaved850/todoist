@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { AddTask, FeaturesWindow, Name, Project, Today } from "./layout.style";
-import { FiCalendar, FiLogOut, FiPlus, FiUser } from "react-icons/fi";
+import React, { MouseEvent, useEffect, useState } from "react";
+import {
+  AddTask,
+  FeaturesWindow,
+  Name,
+  Project,
+  ProjectNameList,
+  Today,
+} from "./layout.style";
+import { FiCalendar, FiHash, FiLogOut, FiPlus, FiUser } from "react-icons/fi";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
@@ -8,10 +15,16 @@ import { BsFillCalendarDateFill } from "react-icons/bs";
 
 interface FeaturesContainerProps {
   onAddTaskClick: () => void;
+  onAddProject: () => void;
+  projectNames: string[];
+  onDeleteProject: (name: string) => void;
 }
 
 const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
   onAddTaskClick,
+  onAddProject,
+  projectNames,
+  onDeleteProject,
 }) => {
   const [userName, setUserName] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -34,11 +47,20 @@ const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
         console.log(error);
       });
   };
+
   const goToToday = () => {
     navigate("/today");
   };
+
   const goToUpcoming = () => {
     navigate("/upcoming");
+  };
+
+  const goToProject = (e: MouseEvent<HTMLLIElement>) => {
+    const projectName = e.currentTarget.textContent?.split("Delete");
+    if (projectName) {
+      navigate(`/myprojects/${projectName[0]}`);
+    }
   };
   return (
     <FeaturesWindow>
@@ -68,9 +90,27 @@ const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
         </Today>
       </ul>
       <Project>
-        <h3>My Projects</h3>
-        <FiPlus />
+        <h4>My Projects</h4>
+        <FiPlus onClick={onAddProject} className="plusLogo" />
       </Project>
+      <ProjectNameList>
+        <ul>
+          {projectNames.map((name) => (
+            <li key={name} onClick={goToProject}>
+              <span>
+                <FiHash />
+                {name}
+              </span>
+              <button
+                className="delete-button"
+                onClick={() => onDeleteProject(name)}
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      </ProjectNameList>
     </FeaturesWindow>
   );
 };

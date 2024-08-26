@@ -14,16 +14,14 @@ interface Task {
   priority: string;
 }
 
-export const taskUploading = (
+export const projectTaskUploading = (
+  projectName: string | undefined,
   taskName: string | undefined,
   taskDes: string | undefined,
   selectedDate: string,
   selectedPriority: string
-): Promise<string | null> | null => {
+): Promise<string | null> => {
   const user = auth.currentUser;
-  if (taskName === "") {
-    return null;
-  }
   const taskData = {
     name: taskName,
     description: taskDes,
@@ -39,7 +37,10 @@ export const taskUploading = (
     });
     const file = new File([fileBlob], fileName, { type: "application/json" });
 
-    const storageRef = ref(storage, `${uid}/tasks/${file.name}`);
+    const storageRef = ref(
+      storage,
+      `${uid}/MyProjects/${projectName}/${file.name}`
+    );
 
     return uploadBytes(storageRef, file)
       .then(() => "Uploaded a JSON file!")
@@ -51,14 +52,16 @@ export const taskUploading = (
   return Promise.resolve(null);
 };
 
-export const retrieveAllTasks = async (): Promise<Task[]> => {
+export const retrieveProjectTasks = async (
+  projectName: string | undefined
+): Promise<Task[]> => {
   const tasksData: Task[] = [];
   const user = auth.currentUser;
   try {
     if (!user) throw new Error("User is not authenticated");
 
     const uid = user.uid;
-    const tasksRef = ref(storage, `${uid}/tasks/`);
+    const tasksRef = ref(storage, `${uid}/MyProjects/${projectName}/`);
     const result = await listAll(tasksRef);
 
     for (const itemRef of result.items) {
@@ -76,12 +79,18 @@ export const retrieveAllTasks = async (): Promise<Task[]> => {
   return tasksData;
 };
 
-export const deleteTask = async (taskName: string): Promise<void> => {
+export const deleteProjectTask = async (
+  projectName: string,
+  taskName: string
+): Promise<void> => {
   const user = auth.currentUser;
   if (!user) throw new Error("User is not authenticated");
 
   const uid = user.uid;
-  const taskRef = ref(storage, `${uid}/tasks/${taskName}.json`);
+  const taskRef = ref(
+    storage,
+    `${uid}/MyProjects/${projectName}/${taskName}.json`
+  );
 
   try {
     await deleteObject(taskRef);
