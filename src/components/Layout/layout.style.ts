@@ -7,7 +7,7 @@ export const LayoutContainer = styled.div`
 `;
 
 export const FeaturesWindow = styled.div`
-  width: 350px;
+  width: 300px;
   height: 98vh;
   background-color: #fcfaf8;
   ul {
@@ -107,11 +107,18 @@ export const Project = styled.div`
   margin-top: 2rem;
   padding: 0.5rem;
   height: 21px;
-  h3 {
+
+  h4 {
     color: #666666;
+    font-weight: 600;
   }
   &:hover {
     background-color: #f2efed;
+  }
+  .plusLogo {
+    &:hover {
+      color: #e44332;
+    }
   }
 `;
 
@@ -125,4 +132,55 @@ export const Overlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 999;
+`;
+
+export const ProjectNameList = styled.ul`
+  li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: larger;
+    position: relative;
+    padding: 8px;
+
+    span {
+      font-size: medium;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      cursor: pointer;
+      gap: 3px;
+    }
+
+    p {
+      margin: 0;
+      align-items: center;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .delete-button {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: grey;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: opacity 0.3s ease;
+      margin-right: 5px;
+    }
+
+    &:hover .delete-button {
+      background-color: darkgrey;
+      display: block;
+    }
+  }
 `;

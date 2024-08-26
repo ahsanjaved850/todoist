@@ -13,12 +13,16 @@ import { SelectChangeEvent } from "@mui/material";
 import { FiFlag } from "react-icons/fi";
 import { priorityColors } from "../../utils/constants";
 import { taskUploading } from "./taskManaging";
+import { useParams } from "react-router-dom";
+import { projectTaskUploading } from "../Project/projectTaskManagement";
 
 interface AddTaskProps {
   onClose: () => void;
+  isprojectTaskVisible: boolean;
 }
 
-const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
+const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
+  const { projectName } = useParams();
   const [selectedDate, setSelectedDate] = React.useState("Calendar");
   const [selectedPriority, setSelectedPriority] = React.useState("Priority");
   const taskName = useRef<HTMLInputElement>(null);
@@ -35,16 +39,27 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose }) => {
   };
 
   const uploadTask = () => {
-    const uploaded: Promise<null | string> = taskUploading(
-      refTaskName,
-      refTaskDes,
-      selectedDate,
-      selectedPriority
-    );
-    console.log(uploaded);
-    onClose();
+    if (!isprojectTaskVisible) {
+      const uploaded: Promise<null | string> | null = taskUploading(
+        refTaskName,
+        refTaskDes,
+        selectedDate,
+        selectedPriority
+      );
+      console.log(uploaded);
+      onClose();
+    } else {
+      const uploaded: Promise<null | string> | null = projectTaskUploading(
+        projectName,
+        refTaskName,
+        refTaskDes,
+        selectedDate,
+        selectedPriority
+      );
+      console.log(uploaded);
+      onClose();
+    }
   };
-
   return (
     <TaskWrapper>
       <TaskContainer>

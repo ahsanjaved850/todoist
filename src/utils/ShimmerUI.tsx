@@ -1,6 +1,6 @@
 import React from "react";
 import { Tasks } from "../components/Today/today.style";
-import { FiCheckCircle, FiCircle } from "react-icons/fi";
+import { FiCircle } from "react-icons/fi";
 import { priorityColors } from "./constants";
 
 const ShimmerUI: React.FC = () => {
@@ -8,7 +8,6 @@ const ShimmerUI: React.FC = () => {
     <Tasks color={priorityColors["5"]}>
       <span>
         <FiCircle className="fi-circle" />
-        <FiCheckCircle className="fi-check-circle" />
       </span>
       <div>
         <h3>Task Name.......</h3>
