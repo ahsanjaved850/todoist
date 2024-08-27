@@ -1,4 +1,4 @@
-# Todoist-like Task Management App
+# Todoist App
 
 A web-based task management application inspired by Todoist, built using React, TypeScript, Firebase, Material UI, and styled-components. This app allows users to manage tasks across multiple projects, prioritize tasks, and ensures that each user's tasks are securely stored and accessible only by them.
 
