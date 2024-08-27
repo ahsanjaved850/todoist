@@ -21,13 +21,12 @@ interface TodayProps {
 
 const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
   const [todayTasks, setTodayTasks] = useState<Task[] | null>(null);
-  const totalTasks = todayTasks?.filter((task) => task.date === "today");
 
   const handleDelete = async (taskName: string) => {
     try {
       await deleteTask(taskName);
       // Update UI by removing the deleted task from state
-      setTodayTasks((prevTasks: Task[] | null) =>
+      setTodayTasks((prevTasks) =>
         prevTasks ? prevTasks.filter((task) => task.name !== taskName) : null
       );
     } catch (error) {
@@ -36,19 +35,27 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
   };
 
   useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const tasks = await retrieveAllTasks();
+        const sortedTasks = tasks
+          .filter((task) => task.date === "today")
+          .sort((a, b) => parseInt(a.priority) - parseInt(b.priority));
+        setTodayTasks(sortedTasks);
+      } catch (error) {
+        console.error("Failed to retrieve tasks:", error);
+      }
+    };
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        retrieveAllTasks().then((tasks) => {
-          const sortedTasks = tasks
-            .filter((task) => task.date === "today")
-            .sort((a, b) => parseInt(a.priority) - parseInt(b.priority));
-          setTodayTasks(sortedTasks);
-        });
+        fetchTasks();
         if (refreshTask) {
           handleRefreshTasks();
         }
       }
     });
+
     return () => unsubscribe();
   }, [refreshTask, handleRefreshTasks]);
 
@@ -61,29 +68,27 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
             <span>
               <FiCheckCircle />
             </span>
-            Total tasks: {totalTasks?.length || 0}
+            Total tasks: {todayTasks?.length || 0}
           </h5>
         </div>
         {todayTasks && todayTasks.length > 0 ? (
-          todayTasks
-            .filter((task) => task.date === "today")
-            .map((task, index) => (
-              <Tasks
-                color={priorityColors[task.priority as "1" | "2" | "3" | "4"]}
-                key={index}
-              >
-                <span onClick={() => handleDelete(task.name)}>
-                  <FiCircle className="fi-circle" />
-                  <FiCheckCircle className="fi-check-circle" />
-                </span>
-                <div>
-                  <h3>{task.name}</h3>
-                  <p>{task.description}</p>
-                </div>
-              </Tasks>
-            ))
+          todayTasks.map((task, index) => (
+            <Tasks
+              color={priorityColors[task.priority as "1" | "2" | "3" | "4"]}
+              key={index}
+            >
+              <span onClick={() => handleDelete(task.name)}>
+                <FiCircle className="fi-circle" />
+                <FiCheckCircle className="fi-check-circle" />
+              </span>
+              <div>
+                <h3>{task.name}</h3>
+                <p>{task.description}</p>
+              </div>
+            </Tasks>
+          ))
         ) : (
-          <ShimmerUI></ShimmerUI>
+          <ShimmerUI />
         )}
       </TasksDisplayWindow>
     </div>

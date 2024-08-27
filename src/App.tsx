@@ -20,7 +20,7 @@ const App: React.FC = () => {
       path: "/today",
       element: (
         <Layout>
-          <Today />
+          <Today refreshTask handleRefreshTasks={() => {}} />
         </Layout>
       ),
     },
@@ -28,7 +28,7 @@ const App: React.FC = () => {
       path: "/upcoming",
       element: (
         <Layout>
-          <Upcoming />
+          <Upcoming refreshTask handleRefreshTasks={() => {}} />
         </Layout>
       ),
     },
@@ -36,7 +36,11 @@ const App: React.FC = () => {
       path: "/myprojects/:projectName",
       element: (
         <Layout>
-          <Project />
+          <Project
+            refreshTask
+            handleRefreshTasks={() => {}}
+            handleAddProjecTasks={() => {}}
+          />
         </Layout>
       ),
     },

@@ -107,7 +107,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         })}
       {isAddTaskVisible && (
         <Overlay>
-          <AddTask onClose={handleCloseAddTask} _ />
+          <AddTask onClose={handleCloseAddTask} isprojectTaskVisible={false} />
         </Overlay>
       )}
       {isprojectTaskVisible && (
