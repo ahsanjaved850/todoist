@@ -23,13 +23,17 @@ export const FeaturesWindow = styled.div`
       background-color: #f2efed;
     }
   }
+  @media (max-width: 1000px) {
+    width: fit-content;
+  }
 `;
 export const Name = styled.div`
+  position: relative;
   height: fit-content;
-  text-decoration: underline;
   font-size: 18px;
   margin-top: 25px;
   cursor: pointer;
+
   span {
     margin-left: 6px;
     padding: 0.5rem;
@@ -39,37 +43,42 @@ export const Name = styled.div`
     gap: 5px;
     &:hover {
       background-color: #f2efed;
+      text-decoration: underline black;
     }
   }
+
   h4 {
     font-weight: 500;
     color: #202020;
     margin-top: 0px;
     margin-bottom: 0px;
   }
+
   ul {
-    display: none;
-    font-weight: 400;
+    position: absolute;
+    top: 100%;
+    left: 35px;
+    display: block;
     margin: 0;
-    width: fit-content;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    z-index: 10;
+    border-radius: 4px;
+    width: 100px;
   }
+
   li {
-    margin-left: 35px;
     cursor: pointer;
+    padding: 0.5rem;
     font-size: small;
     display: flex;
-    flex-direction: row;
+    align-items: center;
     gap: 4px;
-    font-weight: 400px;
-    margin-top: 2px;
-    background-color: white;
+    font-weight: 400;
     &:hover {
+      background-color: #f2efed;
       text-decoration: underline;
-    }
-  }
-  &:hover {
-    ul {
-      display: inline-block;
     }
   }
 `;

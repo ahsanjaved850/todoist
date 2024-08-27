@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useState } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
 import {
   AddTask,
   FeaturesWindow,
@@ -27,6 +27,7 @@ const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
   onDeleteProject,
 }) => {
   const [userName, setUserName] = useState<string | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,6 +49,10 @@ const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
       });
   };
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   const goToToday = () => {
     navigate("/today");
   };
@@ -62,18 +67,21 @@ const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
       navigate(`/myprojects/${projectName[0]}`);
     }
   };
+
   return (
     <FeaturesWindow>
-      <Name>
+      <Name onClick={toggleDropdown}>
         <span>
           <FiUser />
           <h4>{userName}</h4>
         </span>
-        <ul>
-          <li onClick={handleSignOut}>
-            <FiLogOut /> Logout
-          </li>
-        </ul>
+        {isDropdownOpen && (
+          <ul>
+            <li onClick={handleSignOut}>
+              <FiLogOut /> Logout
+            </li>
+          </ul>
+        )}
       </Name>
       <ul>
         <AddTask onClick={onAddTaskClick}>
