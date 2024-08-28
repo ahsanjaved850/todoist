@@ -5,7 +5,6 @@ import AddTask from "../AddTask/AddTask";
 import ProjectForm from "../Project/ProjectForm";
 import { auth } from "../../utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 
 interface ChildProps {
   refreshTask: boolean;
@@ -25,8 +24,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [projectNames, setProjectNames] = useState<string[]>([]);
   const [isprojectTaskVisible, setProjectTaskVisible] =
     useState<boolean>(false);
-  const navigate = useNavigate();
-
   const user = auth.currentUser;
 
   useEffect(() => {
@@ -59,14 +56,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       (projectName) => projectName !== name
     );
     setProjectNames(updatedProjectNames);
-
     if (user) {
       localStorage.setItem(
         `projectNames_${user.uid}`,
         JSON.stringify(updatedProjectNames)
       );
     }
-    navigate("/today");
   };
 
   const handleAddTaskClick = () => {
