@@ -25,7 +25,9 @@ const Login: React.FC = () => {
   const email = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
 
-  const handleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignIn = async (
+    e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent
+  ) => {
     e.preventDefault();
     const refUserName = userName.current?.value || "";
     const refEmail = email.current?.value || "";
@@ -39,7 +41,7 @@ const Login: React.FC = () => {
 
     try {
       if (signinFrom) {
-        loginAuth(refEmail, refPassword);
+        await loginAuth(refEmail, refPassword);
         navigate("/today");
       } else {
         await signupAuth(refUserName, refEmail, refPassword);
@@ -47,6 +49,12 @@ const Login: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSignIn(e);
     }
   };
 
@@ -62,7 +70,7 @@ const Login: React.FC = () => {
           <h1>todoist</h1>
         </LogoWrapper>
         <h2>{signinFrom ? "Log in" : "Sign up"}</h2>
-        <FormDiv>
+        <FormDiv onKeyDown={handleKeyDown}>
           {!signinFrom && (
             <StyledTextField
               inputRef={userName}
