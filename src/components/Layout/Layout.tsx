@@ -24,7 +24,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [projectNames, setProjectNames] = useState<string[]>([]);
   const [isprojectTaskVisible, setProjectTaskVisible] =
     useState<boolean>(false);
-
   const user = auth.currentUser;
 
   useEffect(() => {
@@ -57,7 +56,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       (projectName) => projectName !== name
     );
     setProjectNames(updatedProjectNames);
-
     if (user) {
       localStorage.setItem(
         `projectNames_${user.uid}`,

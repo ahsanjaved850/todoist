@@ -57,6 +57,11 @@ const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
     navigate("/today");
   };
 
+  const handleDeleteClick = (name: string) => {
+    onDeleteProject(name);
+    goToToday();
+  };
+
   const goToUpcoming = () => {
     navigate("/upcoming");
   };
@@ -111,7 +116,10 @@ const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
               </span>
               <button
                 className="delete-button"
-                onClick={() => onDeleteProject(name)}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleDeleteClick(name);
+                }}
               >
                 Delete
               </button>
