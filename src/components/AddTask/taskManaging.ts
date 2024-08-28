@@ -52,28 +52,23 @@ export const taskUploading = (
 };
 
 export const retrieveAllTasks = async (): Promise<Task[]> => {
-  const tasksData: Task[] = [];
   const user = auth.currentUser;
-  try {
-    if (!user) throw new Error("User is not authenticated");
+  if (!user) throw new Error("User is not authenticated");
 
-    const uid = user.uid;
-    const tasksRef = ref(storage, `${uid}/tasks/`);
-    const result = await listAll(tasksRef);
+  const uid = user.uid;
+  const tasksRef = ref(storage, `${uid}/tasks/`);
+  const result = await listAll(tasksRef);
 
-    for (const itemRef of result.items) {
-      const downloadURL = await getDownloadURL(itemRef);
-      const response = await fetch(downloadURL);
-      if (!response.ok)
-        throw new Error(`Failed to fetch task: ${response.statusText}`);
+  const taskPromises = result.items.map(async (itemRef) => {
+    const downloadURL = await getDownloadURL(itemRef);
+    const response = await fetch(downloadURL);
+    if (!response.ok)
+      throw new Error(`Failed to fetch task: ${response.statusText}`);
 
-      const taskData: Task = await response.json();
-      tasksData.push(taskData);
-    }
-  } catch (error) {
-    console.error("Error retrieving tasks:", error);
-  }
-  return tasksData;
+    return await response.json();
+  });
+
+  return Promise.all(taskPromises);
 };
 
 export const deleteTask = async (taskName: string): Promise<void> => {
