@@ -80,7 +80,7 @@ const Project: React.FC<ProjectProps> = ({
             Total tasks: {projectTasks?.length || 0}
           </h5>
         </div>
-        {projectTasks && projectTasks.length > 0 ? (
+        {projectTasks ? (
           projectTasks.map((task, index) => (
             <Tasks
               color={priorityColors[task.priority as "1" | "2" | "3" | "4"]}
