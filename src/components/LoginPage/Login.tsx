@@ -38,17 +38,21 @@ const Login: React.FC = () => {
       setErrorMsg(message);
       return;
     }
-
     try {
       if (signinFrom) {
-        await loginAuth(refEmail, refPassword);
-        navigate("/today");
+        const loginError = await loginAuth(refEmail, refPassword);
+        if (loginError) {
+          setErrorMsg(loginError);
+        } else {
+          navigate("/today");
+        }
       } else {
         await signupAuth(refUserName, refEmail, refPassword);
         navigate("/today");
       }
     } catch (error) {
       console.log(error);
+      setErrorMsg("Something went wrong. Please try again.");
     }
   };
 
