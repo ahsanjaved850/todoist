@@ -82,6 +82,7 @@ export const ErrorMsg = styled.p`
   font-size: 0.875rem;
   margin-top: 1rem;
   text-align: center;
+  margin: 0;
 `;
 
 export const LogoPic = styled.div`

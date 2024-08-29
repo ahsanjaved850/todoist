@@ -5,17 +5,23 @@ import {
 } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 
-export const loginAuth = (email: string, password: string): string | null => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-    })
-    .catch((error) => {
-      const errorMessage = error.message;
-      return errorMessage;
-    });
-  return null;
+export const loginAuth = async (
+  email: string,
+  password: string
+): Promise<string | null> => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    console.log(user);
+    return null;
+  } catch (error) {
+    const errorMessage = (error as Error).message;
+    return errorMessage;
+  }
 };
 
 export const signupAuth = async (
