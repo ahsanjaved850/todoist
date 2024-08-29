@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   ProjectData,
   ProjectFormDiv,
@@ -18,6 +18,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
   addProjectName,
 }) => {
   const projectNameRef = useRef<HTMLInputElement | null>(null);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const handleProjectName = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,19 +31,34 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     }
   };
 
+  const handleInputChange = () => {
+    const projectName = projectNameRef.current?.value || "";
+    setIsButtonDisabled(projectName.trim() === "");
+  };
+
   return (
     <ProjectFormDiv>
       <ProjectData>
         <h3>Add Project</h3>
         <ProjectFormLayout>
           <h3>Name</h3>
-          <StyledInput type="text" inputRef={projectNameRef} disableUnderline />
+          <StyledInput
+            type="text"
+            inputRef={projectNameRef}
+            disableUnderline
+            onChange={handleInputChange}
+          />
         </ProjectFormLayout>
         <ProjectButtons>
           <button type="button" onClick={onClose}>
             Cancel
           </button>
-          <button type="button" className="proBtn" onClick={handleProjectName}>
+          <button
+            type="button"
+            className="proBtn"
+            onClick={handleProjectName}
+            disabled={isButtonDisabled}
+          >
             Add Project
           </button>
         </ProjectButtons>

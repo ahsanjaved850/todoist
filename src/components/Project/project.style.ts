@@ -33,6 +33,7 @@ export const Tasks = styled.div<{ color: string }>`
     display: none;
   }
 `;
+
 export const ProjectWrapper = styled.div`
   .tag {
     margin-left: 14px;
@@ -74,6 +75,7 @@ const emergeAnimation = keyframes`
     opacity: 1;
   }
   `;
+
 export const ProjectData = styled.div`
   display: flex;
   width: 400px;
@@ -92,6 +94,7 @@ export const ProjectData = styled.div`
     margin-bottom: 10px;
   }
 `;
+
 export const ProjectFormLayout = styled.form`
   h3 {
     margin-bottom: 6px;
@@ -99,12 +102,14 @@ export const ProjectFormLayout = styled.form`
     color: black;
   }
 `;
+
 export const StyledInput = styled(MuiInput)`
   width: 100%;
   border: 1px solid gray;
   border-radius: 4px;
   padding: 6px;
 `;
+
 export const ProjectButtons = styled.div`
   display: flex;
   flex-direction: row;
@@ -120,15 +125,25 @@ export const ProjectButtons = styled.div`
     color: gray;
     border: none;
     cursor: pointer;
+
     &:hover {
       background-color: lightgray;
     }
   }
+
   .proBtn {
     background-color: #e44332;
     color: white;
+    cursor: pointer;
+
     &:hover {
       background-color: #c3392c;
+    }
+
+    &:disabled {
+      background-color: #f0f0f0;
+      color: lightgray;
+      cursor: not-allowed;
     }
   }
 `;

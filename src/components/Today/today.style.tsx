@@ -40,6 +40,7 @@ export const Tasks = styled.div<{ color: string }>`
   display: flex;
   flex-direction: row;
   gap: 0.3rem;
+  margin-top: 10px;
   span {
     height: fit-content;
     color: ${(props) => props.color};
@@ -62,6 +63,7 @@ export const Tasks = styled.div<{ color: string }>`
   p {
     font-size: small;
     margin-top: 5px;
+    margin-bottom: 0px;
   }
   .fi-check-circle {
     display: none;

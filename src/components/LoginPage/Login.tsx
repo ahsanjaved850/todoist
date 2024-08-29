@@ -14,11 +14,13 @@ import {
   StyledTextField,
   ToggleText,
 } from "./login.style";
+import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [signinFrom, setSigninForm] = useState<boolean>(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const userName = useRef<HTMLInputElement | null>(null);
@@ -38,6 +40,9 @@ const Login: React.FC = () => {
       setErrorMsg(message);
       return;
     }
+
+    setLoading(true);
+
     try {
       if (signinFrom) {
         const loginError = await loginAuth(refEmail, refPassword);
@@ -53,6 +58,8 @@ const Login: React.FC = () => {
     } catch (error) {
       console.log(error);
       setErrorMsg("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,8 +109,15 @@ const Login: React.FC = () => {
             type="button"
             onClick={handleSignIn}
             variant="contained"
+            disabled={loading}
           >
-            {signinFrom ? "Log In" : "Sign Up"}
+            {loading ? (
+              <CircularProgress size={24} />
+            ) : signinFrom ? (
+              "Log In"
+            ) : (
+              "Sign Up"
+            )}
           </StyledButton>
           {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
           <ToggleText>

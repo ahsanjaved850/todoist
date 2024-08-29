@@ -38,7 +38,6 @@ const Project: React.FC<ProjectProps> = ({
     try {
       if (projectName) {
         await deleteProjectTask(projectName, taskName);
-        // Update UI by removing the deleted task from state
         setProjectTasks((prevTasks: Task[] | null) =>
           prevTasks ? prevTasks.filter((task) => task.name !== taskName) : null
         );

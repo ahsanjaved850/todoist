@@ -78,15 +78,25 @@ export const ButtonDiv = styled.div`
     color: gray;
     border: none;
     cursor: pointer;
+
     &:hover {
       background-color: lightgray;
     }
   }
+
   .taskBtn {
     background-color: #e44332;
     color: white;
+    cursor: pointer;
+
     &:hover {
       background-color: #c3392c;
+    }
+
+    &:disabled {
+      background-color: #f0f0f0;
+      color: lightgray;
+      cursor: not-allowed;
     }
   }
 `;
