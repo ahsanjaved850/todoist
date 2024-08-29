@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   ButtonDiv,
   FormContainer,
@@ -23,12 +23,19 @@ interface AddTaskProps {
 
 const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
   const { projectName } = useParams();
-  const [selectedDate, setSelectedDate] = React.useState("Calendar");
-  const [selectedPriority, setSelectedPriority] = React.useState("Priority");
-  const taskName = useRef<HTMLInputElement>(null);
-  const taskDes = useRef<HTMLInputElement>(null);
-  const refTaskName = taskName.current?.value;
-  const refTaskDes = taskDes.current?.value;
+  const [taskName, setTaskName] = React.useState<string>("");
+  const [taskDes, setTaskDes] = React.useState<string>("");
+  const [selectedDate, setSelectedDate] = React.useState<string>("Calendar");
+  const [selectedPriority, setSelectedPriority] =
+    React.useState<string>("Priority");
+
+  const handleTaskNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskName(e.target.value);
+  };
+
+  const handleTaskDesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskDes(e.target.value);
+  };
 
   const handleDateChange = (event: SelectChangeEvent<unknown>) => {
     setSelectedDate(event.target.value as string);
@@ -40,38 +47,36 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
 
   const uploadTask = () => {
     if (!isprojectTaskVisible) {
-      const uploaded: Promise<null | string> | null = taskUploading(
-        refTaskName,
-        refTaskDes,
-        selectedDate,
-        selectedPriority
-      );
-      console.log(uploaded);
-      onClose();
+      taskUploading(taskName, taskDes, selectedDate, selectedPriority);
     } else {
-      const uploaded: Promise<null | string> | null = projectTaskUploading(
+      projectTaskUploading(
         projectName,
-        refTaskName,
-        refTaskDes,
+        taskName,
+        taskDes,
         selectedDate,
         selectedPriority
       );
-      console.log(uploaded);
-      onClose();
     }
+    onClose();
   };
+
+  const isButtonDisabled =
+    !taskName || selectedDate === "Calendar" || selectedPriority === "Priority";
+
   return (
     <TaskWrapper>
       <TaskContainer>
         <TaskInfo>
           <input
-            ref={taskName}
+            value={taskName}
+            onChange={handleTaskNameChange}
             className="title"
             type="text"
             placeholder="Task Name"
           />
           <input
-            ref={taskDes}
+            value={taskDes}
+            onChange={handleTaskDesChange}
             className="description"
             type="text"
             placeholder="Description"
@@ -124,7 +129,12 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
           <button type="button" onClick={onClose}>
             Cancel
           </button>
-          <button type="button" className="taskBtn" onClick={uploadTask}>
+          <button
+            type="button"
+            className="taskBtn"
+            onClick={uploadTask}
+            disabled={isButtonDisabled}
+          >
             Add Task
           </button>
         </ButtonDiv>

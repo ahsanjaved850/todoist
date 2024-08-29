@@ -25,7 +25,6 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
   const handleDelete = async (taskName: string) => {
     try {
       await deleteTask(taskName);
-      // Update UI by removing the deleted task from state
       setTodayTasks((prevTasks) =>
         prevTasks ? prevTasks.filter((task) => task.name !== taskName) : null
       );
@@ -71,7 +70,7 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
             Total tasks: {todayTasks?.length || 0}
           </h5>
         </div>
-        {todayTasks && todayTasks.length > 0 ? (
+        {todayTasks ? (
           todayTasks.map((task, index) => (
             <Tasks
               color={priorityColors[task.priority as "1" | "2" | "3" | "4"]}

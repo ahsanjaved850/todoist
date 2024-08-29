@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { TaskDetails } from "./upcoming.style";
+import { TaskDetails, UpcomingTasks } from "./upcoming.style";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
 import { deleteTask, retrieveAllTasks } from "../AddTask/taskManaging";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { priorityColors } from "../../utils/constants";
 import ShimmerUI from "../../utils/ShimmerUI";
-import { Tasks, TasksDisplayWindow } from "../Today/today.style";
+import { TasksDisplayWindow } from "../Today/today.style";
 
 interface Task {
   name: string;
@@ -44,7 +44,7 @@ const Upcoming: React.FC<UpcomingProps> = ({
       if (user) {
         retrieveAllTasks().then((tasks) => {
           const sortedTasks = tasks
-            .filter((task) => task.date === "today")
+            .filter((task) => task.date !== "today")
             .sort((a, b) => parseInt(a.priority) - parseInt(b.priority));
           setUpcomingTasks(sortedTasks);
         });
@@ -68,11 +68,11 @@ const Upcoming: React.FC<UpcomingProps> = ({
             Total tasks: {totalTasks?.length || 0}
           </h5>
         </div>
-        {upcomingTasks && upcomingTasks.length > 0 ? (
+        {upcomingTasks ? (
           upcomingTasks
             .filter((task) => task.date !== "today")
             .map((task, index) => (
-              <Tasks
+              <UpcomingTasks
                 color={priorityColors[task.priority as "1" | "2" | "3" | "4"]}
                 key={index}
               >
@@ -87,7 +87,7 @@ const Upcoming: React.FC<UpcomingProps> = ({
                   </span>
                   <h5>{task.date}</h5>
                 </TaskDetails>
-              </Tasks>
+              </UpcomingTasks>
             ))
         ) : (
           <ShimmerUI></ShimmerUI>
