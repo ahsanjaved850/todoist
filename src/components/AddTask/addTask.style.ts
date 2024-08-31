@@ -29,6 +29,14 @@ export const TaskContainer = styled.div`
   border-radius: 4px;
   animation: ${emergeAnimation} 0.3s ease-out;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 858px) {
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    width: 95%;
+  }
 `;
 export const TaskInfo = styled.div`
   display: flex;
@@ -61,6 +69,9 @@ export const FormContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 `;
 
 export const ButtonDiv = styled.div`
