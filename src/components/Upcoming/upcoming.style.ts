@@ -19,8 +19,6 @@ export const TaskDetails = styled.div`
     height: 20px;
   }
   span {
-    h3 {
-    }
     p {
       color: black;
     }

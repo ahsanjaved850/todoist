@@ -35,12 +35,16 @@ export const TasksDisplayWindow = styled.div`
   @media (max-width: 900px) {
     margin-left: 50px;
   }
+  @media (max-width: 450px) {
+    margin-left: 20px;
+  }
 `;
 export const Tasks = styled.div<{ color: string }>`
   display: flex;
   flex-direction: row;
   gap: 0.3rem;
   margin-top: 10px;
+  margin-bottom: 10px;
   span {
     height: fit-content;
     color: ${(props) => props.color};
@@ -67,5 +71,30 @@ export const Tasks = styled.div<{ color: string }>`
   }
   .fi-check-circle {
     display: none;
+  }
+`;
+
+export const TaskInfo = styled.div`
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgrey;
+  h5 {
+    font-size: 12px;
+    font-weight: 600;
+    flex-direction: flex-end;
+    margin-top: 0%;
+    margin-left: 300px;
+    padding: 0.2rem;
+    background-color: white;
+    color: white;
+    border-radius: 4px;
+    height: 20px;
+  }
+  span {
+    p {
+      color: black;
+    }
   }
 `;

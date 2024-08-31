@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ButtonDiv,
   FormContainer,
@@ -9,7 +9,7 @@ import {
   StyledMenuItem,
   PriorityFlag,
 } from "./addTask.style";
-import { SelectChangeEvent } from "@mui/material";
+import { CircularProgress, SelectChangeEvent } from "@mui/material";
 import { FiFlag } from "react-icons/fi";
 import { priorityColors } from "../../utils/constants";
 import { taskUploading } from "./taskManaging";
@@ -23,6 +23,7 @@ interface AddTaskProps {
 
 const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
   const { projectName } = useParams();
+  const [loading, setLoading] = useState<boolean>(false);
   const [taskName, setTaskName] = React.useState<string>("");
   const [taskDes, setTaskDes] = React.useState<string>("");
   const [selectedDate, setSelectedDate] = React.useState<string>("Calendar");
@@ -48,6 +49,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
   const uploadTask = () => {
     if (!isprojectTaskVisible) {
       taskUploading(taskName, taskDes, selectedDate, selectedPriority);
+      setLoading(true);
     } else {
       projectTaskUploading(
         projectName,
@@ -56,8 +58,13 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
         selectedDate,
         selectedPriority
       );
+      setLoading(true);
     }
-    onClose();
+
+    setTimeout(() => {
+      setLoading(false);
+      onClose();
+    }, 2000);
   };
 
   const isButtonDisabled =
@@ -126,16 +133,16 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
           </FormContainer>
         </TaskInfo>
         <ButtonDiv>
-          <button type="button" onClick={onClose}>
+          <button disabled={loading} type="button" onClick={onClose}>
             Cancel
           </button>
           <button
             type="button"
             className="taskBtn"
             onClick={uploadTask}
-            disabled={isButtonDisabled}
+            disabled={isButtonDisabled || loading}
           >
-            Add Task
+            {loading ? <CircularProgress size={12} /> : "Add Task"}
           </button>
         </ButtonDiv>
       </TaskContainer>

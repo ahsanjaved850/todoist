@@ -93,6 +93,12 @@ export const ProjectData = styled.div`
     margin-top: 0px;
     margin-bottom: 10px;
   }
+  @media (max-width: 750px) {
+    width: 300px;
+  }
+  @media (max-width: 750px) {
+    width: 70%;
+  }
 `;
 
 export const ProjectFormLayout = styled.form`

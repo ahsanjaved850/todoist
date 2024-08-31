@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tasks, TasksDisplayWindow } from "./today.style";
+import { TaskInfo, Tasks, TasksDisplayWindow } from "./today.style";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
 import { deleteTask, retrieveAllTasks } from "../AddTask/taskManaging";
 import { onAuthStateChanged } from "firebase/auth";
@@ -80,10 +80,13 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
                 <FiCircle className="fi-circle" />
                 <FiCheckCircle className="fi-check-circle" />
               </span>
-              <div>
-                <h3>{task.name}</h3>
-                <p>{task.description}</p>
-              </div>
+              <TaskInfo>
+                <span>
+                  <h3>{task.name}</h3>
+                  <p>{task.description}</p>
+                </span>
+                <h5></h5>
+              </TaskInfo>
             </Tasks>
           ))
         ) : (
