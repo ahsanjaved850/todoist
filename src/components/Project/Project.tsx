@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AddTaskDiv, ProjectWrapper, Tasks } from "./project.style";
+import { AddTaskDiv, ProjectWrapper } from "./project.style";
 import { FiCheckCircle, FiCircle, FiPlus } from "react-icons/fi";
 import ShimmerUI from "../../utils/ShimmerUI";
 import { onAuthStateChanged } from "firebase/auth";
@@ -11,7 +11,7 @@ import {
   retrieveProjectTasks,
 } from "./projectTaskManagement";
 import { TaskDetails } from "../Upcoming/upcoming.style";
-import { TasksDisplayWindow } from "../Today/today.style";
+import { Tasks, TasksDisplayWindow } from "../Today/today.style";
 import { Popup } from "../AddTask/addTask.style";
 
 interface Task {
@@ -91,7 +91,9 @@ const Project: React.FC<ProjectProps> = ({
           <>
             {projectTasks.map((task, index) => (
               <Tasks
-                color={priorityColors[task.priority as "1" | "2" | "3" | "4"]}
+                color={
+                  priorityColors[task.priority as "1" | "2" | "3" | "4" | "5"]
+                }
                 key={index}
               >
                 <span onClick={() => handleDelete(task.name)}>

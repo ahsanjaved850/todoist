@@ -69,7 +69,7 @@ export const Tasks = styled.div<{ color: string }>`
   p {
     font-size: small;
     margin-top: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
   }
   .fi-check-circle {
     display: none;
