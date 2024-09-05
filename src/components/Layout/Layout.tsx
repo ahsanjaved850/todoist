@@ -24,6 +24,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [projectNames, setProjectNames] = useState<string[]>([]);
   const [isprojectTaskVisible, setProjectTaskVisible] =
     useState<boolean>(false);
+
   const user = auth.currentUser;
 
   useEffect(() => {

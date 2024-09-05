@@ -7,6 +7,7 @@ import { auth } from "../../utils/firebase";
 import { priorityColors } from "../../utils/constants";
 import ShimmerUI from "../../utils/ShimmerUI";
 import { TasksDisplayWindow } from "../Today/today.style";
+import { Popup } from "../AddTask/addTask.style";
 
 interface Task {
   name: string;
@@ -26,14 +27,21 @@ const Upcoming: React.FC<UpcomingProps> = ({
 }) => {
   const [upcomingTasks, setUpcomingTasks] = useState<Task[] | null>(null);
   const totalTasks = upcomingTasks?.filter((task) => task.date !== "today");
+  const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const handleDelete = async (taskName: string) => {
     try {
+      const audio = new Audio("/completion_sound.mp3");
+      audio.play();
       await deleteTask(taskName);
-      // Update UI by removing the deleted task from state
+
       setUpcomingTasks((prevTasks: Task[] | null) =>
         prevTasks ? prevTasks.filter((task) => task.name !== taskName) : null
       );
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 4500);
     } catch (error) {
       console.error("Failed to delete task:", error);
     }
@@ -93,6 +101,11 @@ const Upcoming: React.FC<UpcomingProps> = ({
           <ShimmerUI></ShimmerUI>
         )}
       </TasksDisplayWindow>
+      {showPopup && (
+        <Popup showPopup={showPopup}>
+          <p>1 Task completed</p>
+        </Popup>
+      )}
     </div>
   );
 };

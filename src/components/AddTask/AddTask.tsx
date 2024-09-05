@@ -8,6 +8,7 @@ import {
   StyledSelect,
   StyledMenuItem,
   PriorityFlag,
+  Popup,
 } from "./addTask.style";
 import { CircularProgress, SelectChangeEvent } from "@mui/material";
 import { FiFlag } from "react-icons/fi";
@@ -26,9 +27,9 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [taskName, setTaskName] = React.useState<string>("");
   const [taskDes, setTaskDes] = React.useState<string>("");
-  const [selectedDate, setSelectedDate] = React.useState<string>("Calendar");
-  const [selectedPriority, setSelectedPriority] =
-    React.useState<string>("Priority");
+  const [selectedDate, setSelectedDate] = React.useState<string>("soon");
+  const [selectedPriority, setSelectedPriority] = React.useState<string>("5");
+  const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const handleTaskNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskName(e.target.value);
@@ -62,13 +63,17 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
     }
 
     setTimeout(() => {
+      setShowPopup(true);
       setLoading(false);
-      onClose();
+
+      setTimeout(() => {
+        onClose();
+        setShowPopup(false);
+      }, 1500);
     }, 2000);
   };
 
-  const isButtonDisabled =
-    !taskName || selectedDate === "Calendar" || selectedPriority === "Priority";
+  const isButtonDisabled = !taskName;
 
   return (
     <TaskWrapper>
@@ -90,7 +95,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
           />
           <FormContainer>
             <StyledSelect value={selectedDate} onChange={handleDateChange}>
-              <StyledMenuItem value="Calendar" disabled>
+              <StyledMenuItem value="soon" disabled>
                 Calendar
               </StyledMenuItem>
               <StyledMenuItem value="today">Today</StyledMenuItem>
@@ -102,7 +107,8 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
               value={selectedPriority}
               onChange={handlePriorityChange}
             >
-              <StyledMenuItem value="Priority" disabled>
+              <StyledMenuItem value="5">
+                <PriorityFlag color={priorityColors["5"]}></PriorityFlag>
                 Priority
               </StyledMenuItem>
               <StyledMenuItem value="1">
@@ -146,6 +152,11 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
           </button>
         </ButtonDiv>
       </TaskContainer>
+      {showPopup && (
+        <Popup showPopup={showPopup}>
+          <p>Task Added</p>
+        </Popup>
+      )}
     </TaskWrapper>
   );
 };
