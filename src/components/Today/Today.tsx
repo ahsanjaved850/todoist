@@ -34,9 +34,7 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
         prevTasks ? prevTasks.filter((task) => task.name !== taskName) : null
       );
       setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false);
-      }, 4500);
+      setTimeout(() => setShowPopup(false), 4500);
     } catch (error) {
       console.error("Failed to delete task:", error);
     }

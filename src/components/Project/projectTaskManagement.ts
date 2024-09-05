@@ -28,13 +28,13 @@ export const projectTaskUploading = (
     date: selectedDate,
     priority: selectedPriority,
   };
-
   if (user) {
     const uid = user.uid;
     const fileName = `${taskData.name}.json`;
     const fileBlob = new Blob([JSON.stringify(taskData)], {
       type: "application/json",
     });
+
     const file = new File([fileBlob], fileName, { type: "application/json" });
 
     const storageRef = ref(

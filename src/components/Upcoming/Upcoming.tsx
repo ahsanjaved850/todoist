@@ -35,13 +35,11 @@ const Upcoming: React.FC<UpcomingProps> = ({
       audio.play();
       await deleteTask(taskName);
 
-      setUpcomingTasks((prevTasks: Task[] | null) =>
+      setUpcomingTasks((prevTasks) =>
         prevTasks ? prevTasks.filter((task) => task.name !== taskName) : null
       );
       setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false);
-      }, 4500);
+      setTimeout(() => setShowPopup(false), 4500);
     } catch (error) {
       console.error("Failed to delete task:", error);
     }
@@ -98,7 +96,7 @@ const Upcoming: React.FC<UpcomingProps> = ({
               </UpcomingTasks>
             ))
         ) : (
-          <ShimmerUI></ShimmerUI>
+          <ShimmerUI />
         )}
       </TasksDisplayWindow>
       {showPopup && (

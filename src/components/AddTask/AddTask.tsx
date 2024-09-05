@@ -108,7 +108,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
               onChange={handlePriorityChange}
             >
               <StyledMenuItem value="5">
-                <PriorityFlag color={priorityColors["5"]}></PriorityFlag>
+                <PriorityFlag color={priorityColors["5"]} />
                 Priority
               </StyledMenuItem>
               <StyledMenuItem value="1">

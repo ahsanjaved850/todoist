@@ -1,43 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Input as MuiInput } from "@mui/material";
 
-export const Tasks = styled.div<{ color: string }>`
-  font-size: 8px;
-  display: flex;
-  flex-direction: row;
-  gap: 0.3rem;
-  margin-top: 10px;
-  margin-bottom: 12px;
-  border-bottom: 1px solid lightgrey;
-  span {
-    height: fit-content;
-    color: ${(props) => props.color};
-    font-size: x-large;
-    &:hover {
-      .fi-check-circle {
-        display: inline-block;
-      }
-      .fi-circle {
-        display: none;
-      }
-    }
-  }
-  h3 {
-    font-weight: 400;
-    color: black;
-    font-size: large;
-    margin: 0;
-  }
-  p {
-    font-size: small;
-    margin-top: 5px;
-    margin-bottom: 0px;
-  }
-  .fi-check-circle {
-    display: none;
-  }
-`;
-
 export const ProjectWrapper = styled.div`
   .tag {
     margin-left: 14px;
