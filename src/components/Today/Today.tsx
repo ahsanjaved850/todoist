@@ -6,6 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { priorityColors } from "../../utils/constants";
 import ShimmerUI from "../../utils/ShimmerUI";
+import { Popup } from "../AddTask/addTask.style";
 
 interface Task {
   name: string;
@@ -21,13 +22,21 @@ interface TodayProps {
 
 const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
   const [todayTasks, setTodayTasks] = useState<Task[] | null>(null);
+  const [showPopup, setShowPopup] = useState<boolean>(false);
 
   const handleDelete = async (taskName: string) => {
     try {
+      const audio = new Audio("/completion_sound.mp3");
+      audio.play();
+
       await deleteTask(taskName);
       setTodayTasks((prevTasks) =>
         prevTasks ? prevTasks.filter((task) => task.name !== taskName) : null
       );
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 4500);
     } catch (error) {
       console.error("Failed to delete task:", error);
     }
@@ -73,7 +82,9 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
         {todayTasks ? (
           todayTasks.map((task, index) => (
             <Tasks
-              color={priorityColors[task.priority as "1" | "2" | "3" | "4"]}
+              color={
+                priorityColors[task.priority as "1" | "2" | "3" | "4" | "5"]
+              }
               key={index}
             >
               <span onClick={() => handleDelete(task.name)}>
@@ -93,6 +104,11 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
           <ShimmerUI />
         )}
       </TasksDisplayWindow>
+      {showPopup && (
+        <Popup showPopup={showPopup}>
+          <p>1 Task completed</p>
+        </Popup>
+      )}
     </div>
   );
 };

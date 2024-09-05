@@ -5,7 +5,7 @@ export const TaskDetails = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1px solid lightgrey;
+
   h5 {
     font-size: 12px;
     font-weight: 600;
@@ -25,10 +25,12 @@ export const TaskDetails = styled.div`
   }
 `;
 export const UpcomingTasks = styled.div<{ color: string }>`
+  font-size: 8px;
   display: flex;
   flex-direction: row;
   gap: 0.3rem;
-  margin-top: 10px;
+  margin-top: 12px;
+  border-bottom: 1px solid lightgrey;
   span {
     height: fit-content;
     color: ${(props) => props.color};

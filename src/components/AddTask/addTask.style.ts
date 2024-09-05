@@ -130,3 +130,31 @@ export const StyledMenuItem = styled(MenuItem)`
 export const PriorityFlag = styled.span<{ color: string }>`
   color: ${(props) => props.color};
 `;
+
+export const Popup = styled.div<{ showPopup: boolean }>`
+  font-size: medium;
+  position: fixed;
+  bottom: 40px;
+  left: 12px;
+  background-color: rgb(40, 40, 40);
+  color: white;
+  width: fit-content;
+  border-radius: 4px;
+  opacity: ${({ showPopup }) => (showPopup ? 1 : 0)};
+  visibility: ${({ showPopup }) => (showPopup ? "visible" : "hidden")};
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+
+  p {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    margin: 0px;
+    padding: 8px 16px;
+  }
+
+  span {
+    margin-right: 3px;
+  }
+`;

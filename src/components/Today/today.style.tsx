@@ -40,11 +40,13 @@ export const TasksDisplayWindow = styled.div`
   }
 `;
 export const Tasks = styled.div<{ color: string }>`
+  font-size: 8px;
   display: flex;
   flex-direction: row;
   gap: 0.3rem;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid lightgrey;
   span {
     height: fit-content;
     color: ${(props) => props.color};
