@@ -9,4 +9,4 @@ export {
   Project,
   Overlay,
   ProjectNameList,
-} from "./Layout.style";
+} from "@/components/Layout/Layout.style";
