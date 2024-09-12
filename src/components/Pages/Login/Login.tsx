@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
-import { valideUserInfo } from "./validateUserInfo";
-import { loginAuth, signupAuth } from "./userAuthentication";
+import { valideUserInfo } from "@/components/Pages/Login/validateUserInfo";
+import {
+  loginAuth,
+  signupAuth,
+} from "@/components/Pages/Login/userAuthentication";
 import icon from "/todoist.svg";
 import { loginPic } from "@/utils/constants";
 import {
@@ -13,7 +16,7 @@ import {
   StyledButton,
   StyledTextField,
   ToggleText,
-} from "./Login.style";
+} from "@/components/Pages/Login/Login.style";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { TaskInfo, Tasks, TasksDisplayWindow } from "./Today.style";
+import {
+  TaskInfo,
+  Tasks,
+  TasksDisplayWindow,
+} from "@/components/Pages/Today/Today.style";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
 import { deleteTask, fetchingAllTasks } from "@/components/AddTask";
 import { onAuthStateChanged } from "firebase/auth";

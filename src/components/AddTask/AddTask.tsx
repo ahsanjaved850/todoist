@@ -12,7 +12,7 @@ import {
 } from "@/components/AddTask";
 import { CircularProgress, SelectChangeEvent } from "@mui/material";
 import { FiFlag } from "react-icons/fi";
-import { priorityColors } from "../../utils/constants";
+import { priorityColors } from "@/utils/constants";
 import { taskUploading } from "@/components/AddTask";
 import { useParams } from "react-router-dom";
 import { projectTaskUploading } from "@/components/Pages/Project";
