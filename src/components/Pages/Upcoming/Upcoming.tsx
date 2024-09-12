@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { TaskDetails, UpcomingTasks } from "./Upcoming.style";
+import {
+  TaskDetails,
+  UpcomingTasks,
+} from "@/components/Pages/Upcoming/Upcoming.style";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
 import { deleteTask, fetchingAllTasks } from "@/components/AddTask";
 import { onAuthStateChanged } from "firebase/auth";

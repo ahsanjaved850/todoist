@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import React from "react";
-import { LoadingPageContainer } from "./Loading.style";
+import { LoadingPageContainer } from "@/components/LoadingState/Loading.style";
 
 export const LoadingPage: React.FC = () => {
   return (

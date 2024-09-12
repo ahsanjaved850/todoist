@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { AddTaskDiv, ProjectWrapper } from "./Project.style";
+import {
+  AddTaskDiv,
+  ProjectWrapper,
+} from "@/components/Pages/Project/Project.style";
 import { FiCheckCircle, FiCircle, FiPlus } from "react-icons/fi";
 import { LoadingState } from "@/components/LoadingState";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/utils/firebase";
 import { priorityColors } from "@/utils/constants";
 import { useParams } from "react-router-dom";
-import { deleteProjectTask, fetchProjectTasks } from "./projectTaskManagement";
+import {
+  deleteProjectTask,
+  fetchProjectTasks,
+} from "@/components/Pages/Project/projectTaskManagement";
 import { TaskDetails } from "@/components/Pages/Upcoming";
 import { Tasks, TasksDisplayWindow } from "@/components/Pages/Today";
 import { Popup } from "@/components/AddTask";

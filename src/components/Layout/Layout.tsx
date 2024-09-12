@@ -1,10 +1,10 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import { FeaturesContainer } from "./FeaturesContainer";
+import { FeaturesContainer } from "@/components/Layout/FeaturesContainer";
 import { AddTask } from "@/components/AddTask";
 import { ProjectForm } from "@/components/Pages/Project";
 import { auth } from "@/utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { LayoutContainer, Overlay } from "./Layout.style";
+import { LayoutContainer, Overlay } from "@/components/Layout/Layout.style";
 
 interface ChildProps {
   refreshTask: boolean;
