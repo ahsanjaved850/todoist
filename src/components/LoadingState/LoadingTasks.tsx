@@ -1,12 +1,12 @@
 import React from "react";
-import { Tasks } from "../components/Today/today.style";
-import { priorityColors } from "./constants";
-import { ShimmerContainer } from "./ShimmerUI.style";
+import { Tasks } from "@/components/Pages/Today/Today.style";
+import { priorityColors } from "@/utils/constants";
 import { FiCircle } from "react-icons/fi";
+import { LoadingStateContainer } from "./Loading.style";
 
-const ShimmerUI: React.FC = () => {
+export const LoadingState: React.FC = () => {
   return (
-    <ShimmerContainer>
+    <LoadingStateContainer>
       <Tasks color={priorityColors["5"]}>
         <span>
           <FiCircle></FiCircle>
@@ -43,8 +43,6 @@ const ShimmerUI: React.FC = () => {
           <p>Task Description.........</p>
         </div>
       </Tasks>
-    </ShimmerContainer>
+    </LoadingStateContainer>
   );
 };
-
-export default ShimmerUI;

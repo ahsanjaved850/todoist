@@ -5,7 +5,7 @@ import {
   ProjectFormLayout,
   StyledInput,
   ProjectButtons,
-} from "./project.style";
+} from "./Project.style";
 import { useNavigate } from "react-router-dom";
 
 interface ProjectFormProps {
@@ -13,7 +13,7 @@ interface ProjectFormProps {
   addProjectName: (name: string) => void;
 }
 
-const ProjectForm: React.FC<ProjectFormProps> = ({
+export const ProjectForm: React.FC<ProjectFormProps> = ({
   onClose,
   addProjectName,
 }) => {
@@ -66,5 +66,3 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     </ProjectFormDiv>
   );
 };
-
-export default ProjectForm;

@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { AddTaskDiv, ProjectWrapper } from "./project.style";
+import { AddTaskDiv, ProjectWrapper } from "./Project.style";
 import { FiCheckCircle, FiCircle, FiPlus } from "react-icons/fi";
-import ShimmerUI from "../../utils/ShimmerUI";
+import { LoadingState } from "@/components/LoadingState";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../utils/firebase";
-import { priorityColors } from "../../utils/constants";
+import { auth } from "@/utils/firebase";
+import { priorityColors } from "@/utils/constants";
 import { useParams } from "react-router-dom";
-import {
-  deleteProjectTask,
-  retrieveProjectTasks,
-} from "./projectTaskManagement";
-import { TaskDetails } from "../Upcoming/upcoming.style";
-import { Tasks, TasksDisplayWindow } from "../Today/today.style";
-import { Popup } from "../AddTask/addTask.style";
+import { deleteProjectTask, fetchProjectTasks } from "./projectTaskManagement";
+import { TaskDetails } from "@/components/Pages/Upcoming";
+import { Tasks, TasksDisplayWindow } from "@/components/Pages/Today";
+import { Popup } from "@/components/AddTask";
 
 interface Task {
   name: string;
@@ -27,7 +24,7 @@ interface ProjectProps {
   handleAddProjecTasks: () => void;
 }
 
-const Project: React.FC<ProjectProps> = ({
+export const Project: React.FC<ProjectProps> = ({
   refreshTask,
   handleRefreshTasks,
   handleAddProjecTasks,
@@ -35,6 +32,23 @@ const Project: React.FC<ProjectProps> = ({
   const { projectName } = useParams();
   const [projectTasks, setProjectTasks] = useState<Task[] | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchProjectTasks(projectName).then((tasks) => {
+          const sortedTasks = tasks.sort(
+            (a, b) => parseInt(a.priority) - parseInt(b.priority)
+          );
+          setProjectTasks(sortedTasks);
+        });
+        if (refreshTask) {
+          handleRefreshTasks();
+        }
+      }
+    });
+    return () => unsubscribe();
+  }, [refreshTask, handleRefreshTasks, projectName]);
 
   const handleDelete = async (taskName: string) => {
     try {
@@ -54,23 +68,6 @@ const Project: React.FC<ProjectProps> = ({
       console.error("Failed to delete task:", error);
     }
   };
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        retrieveProjectTasks(projectName).then((tasks) => {
-          const sortedTasks = tasks.sort(
-            (a, b) => parseInt(a.priority) - parseInt(b.priority)
-          );
-          setProjectTasks(sortedTasks);
-        });
-        if (refreshTask) {
-          handleRefreshTasks();
-        }
-      }
-    });
-    return () => unsubscribe();
-  }, [refreshTask, handleRefreshTasks, projectName]);
 
   return (
     <ProjectWrapper>
@@ -117,7 +114,7 @@ const Project: React.FC<ProjectProps> = ({
             </AddTaskDiv>
           </>
         ) : (
-          <ShimmerUI />
+          <LoadingState />
         )}
       </TasksDisplayWindow>
       {showPopup && (
@@ -128,5 +125,3 @@ const Project: React.FC<ProjectProps> = ({
     </ProjectWrapper>
   );
 };
-
-export default Project;

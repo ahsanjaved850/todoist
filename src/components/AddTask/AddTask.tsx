@@ -9,20 +9,23 @@ import {
   StyledMenuItem,
   PriorityFlag,
   Popup,
-} from "./addTask.style";
+} from "@/components/AddTask";
 import { CircularProgress, SelectChangeEvent } from "@mui/material";
 import { FiFlag } from "react-icons/fi";
 import { priorityColors } from "../../utils/constants";
-import { taskUploading } from "./taskManaging";
+import { taskUploading } from "@/components/AddTask";
 import { useParams } from "react-router-dom";
-import { projectTaskUploading } from "../Project/projectTaskManagement";
+import { projectTaskUploading } from "@/components/Pages/Project";
 
 interface AddTaskProps {
   onClose: () => void;
   isprojectTaskVisible: boolean;
 }
 
-const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
+export const AddTask: React.FC<AddTaskProps> = ({
+  onClose,
+  isprojectTaskVisible,
+}) => {
   const { projectName } = useParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [taskName, setTaskName] = React.useState<string>("");
@@ -160,5 +163,3 @@ const AddTask: React.FC<AddTaskProps> = ({ onClose, isprojectTaskVisible }) => {
     </TaskWrapper>
   );
 };
-
-export default AddTask;
