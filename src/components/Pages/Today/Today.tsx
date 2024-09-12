@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { TaskInfo, Tasks, TasksDisplayWindow } from "./today.style";
+import { TaskInfo, Tasks, TasksDisplayWindow } from "./Today.style";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
-import { deleteTask, retrieveAllTasks } from "../AddTask/taskManaging";
+import { deleteTask, fetchingAllTasks } from "@/components/AddTask";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../utils/firebase";
-import { priorityColors } from "../../utils/constants";
-import ShimmerUI from "../../utils/ShimmerUI";
-import { Popup } from "../AddTask/addTask.style";
+import { auth } from "@/utils/firebase";
+import { priorityColors } from "@/utils/constants";
+import { LoadingState } from "@/components/LoadingState";
+import { Popup } from "@/components/AddTask";
 
 interface Task {
   name: string;
@@ -20,30 +20,17 @@ interface TodayProps {
   handleRefreshTasks: () => void;
 }
 
-const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
+export const Today: React.FC<TodayProps> = ({
+  refreshTask,
+  handleRefreshTasks,
+}) => {
   const [todayTasks, setTodayTasks] = useState<Task[] | null>(null);
   const [showPopup, setShowPopup] = useState<boolean>(false);
-
-  const handleDelete = async (taskName: string) => {
-    try {
-      const audio = new Audio("/completion_sound.mp3");
-      audio.play();
-
-      await deleteTask(taskName);
-      setTodayTasks((prevTasks) =>
-        prevTasks ? prevTasks.filter((task) => task.name !== taskName) : null
-      );
-      setShowPopup(true);
-      setTimeout(() => setShowPopup(false), 4500);
-    } catch (error) {
-      console.error("Failed to delete task:", error);
-    }
-  };
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const tasks = await retrieveAllTasks();
+        const tasks = await fetchingAllTasks();
         const sortedTasks = tasks
           .filter((task) => task.date === "today")
           .sort((a, b) => parseInt(a.priority) - parseInt(b.priority));
@@ -64,6 +51,22 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
 
     return () => unsubscribe();
   }, [refreshTask, handleRefreshTasks]);
+
+  const handleDelete = async (taskName: string) => {
+    try {
+      const audio = new Audio("/completion_sound.mp3");
+      audio.play();
+
+      await deleteTask(taskName);
+      setTodayTasks((prevTasks) =>
+        prevTasks ? prevTasks.filter((task) => task.name !== taskName) : null
+      );
+      setShowPopup(true);
+      setTimeout(() => setShowPopup(false), 4500);
+    } catch (error) {
+      console.error("Failed to delete task:", error);
+    }
+  };
 
   return (
     <div>
@@ -99,7 +102,7 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
             </Tasks>
           ))
         ) : (
-          <ShimmerUI />
+          <LoadingState />
         )}
       </TasksDisplayWindow>
       {showPopup && (
@@ -110,5 +113,3 @@ const Today: React.FC<TodayProps> = ({ refreshTask, handleRefreshTasks }) => {
     </div>
   );
 };
-
-export default Today;

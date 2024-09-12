@@ -5,7 +5,7 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { auth, storage } from "../../utils/firebase";
+import { auth, storage } from "@/utils/firebase";
 
 interface Task {
   name: string;
@@ -51,7 +51,7 @@ export const taskUploading = (
   return Promise.resolve(null);
 };
 
-export const retrieveAllTasks = async (): Promise<Task[]> => {
+export const fetchingAllTasks = async (): Promise<Task[]> => {
   const user = auth.currentUser;
   if (!user) throw new Error("User is not authenticated");
 

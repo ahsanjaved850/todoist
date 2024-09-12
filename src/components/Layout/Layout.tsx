@@ -1,9 +1,9 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import { LayoutContainer, Overlay } from "./layout.style";
-import FeaturesContainer from "./FeaturesContainer";
-import AddTask from "../AddTask/AddTask";
-import ProjectForm from "../Project/ProjectForm";
-import { auth } from "../../utils/firebase";
+import { LayoutContainer, Overlay } from "./Layout.style";
+import { FeaturesContainer } from "./FeaturesContainer";
+import { AddTask } from "@/components/AddTask";
+import { ProjectForm } from "@/components/Pages/Project";
+import { auth } from "@/utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 interface ChildProps {
@@ -17,7 +17,7 @@ interface LayoutProps {
   children: ReactElement<ChildProps>;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isAddTaskVisible, setAddTaskVisible] = useState<boolean>(false);
   const [refreshTask, setRefreshTask] = useState<boolean>(false);
   const [isAddProjectVisible, setAddProject] = useState<boolean>(false);
@@ -125,5 +125,3 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     </LayoutContainer>
   );
 };
-
-export default Layout;

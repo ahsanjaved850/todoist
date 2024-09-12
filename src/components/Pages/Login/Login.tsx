@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { valideUserInfo } from "./validateUserInfo";
 import { loginAuth, signupAuth } from "./userAuthentication";
 import icon from "/todoist.svg";
-import { loginPic } from "../../utils/constants";
+import { loginPic } from "@/utils/constants";
 import {
   ErrorMsg,
   FormDiv,
@@ -13,11 +13,11 @@ import {
   StyledButton,
   StyledTextField,
   ToggleText,
-} from "./login.style";
+} from "./Login.style";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const Login: React.FC = () => {
+export const Login: React.FC = () => {
   const [signinFrom, setSigninForm] = useState<boolean>(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -134,5 +134,3 @@ const Login: React.FC = () => {
     </LoginContainer>
   );
 };
-
-export default Login;

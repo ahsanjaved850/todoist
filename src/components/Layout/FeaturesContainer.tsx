@@ -6,10 +6,10 @@ import {
   Project,
   ProjectNameList,
   Today,
-} from "./layout.style";
+} from "./Layout.style";
 import { FiCalendar, FiHash, FiLogOut, FiPlus, FiUser } from "react-icons/fi";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../../utils/firebase";
+import { auth } from "@/utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 
@@ -20,7 +20,7 @@ interface FeaturesContainerProps {
   onDeleteProject: (name: string) => void;
 }
 
-const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
+export const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
   onAddTaskClick,
   onAddProject,
   projectNames,
@@ -130,5 +130,3 @@ const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
     </FeaturesWindow>
   );
 };
-
-export default FeaturesContainer;

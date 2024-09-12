@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { TaskDetails, UpcomingTasks } from "./upcoming.style";
+import { TaskDetails, UpcomingTasks } from "./Upcoming.style";
 import { FiCheckCircle, FiCircle } from "react-icons/fi";
-import { deleteTask, retrieveAllTasks } from "../AddTask/taskManaging";
+import { deleteTask, fetchingAllTasks } from "@/components/AddTask";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../utils/firebase";
-import { priorityColors } from "../../utils/constants";
-import ShimmerUI from "../../utils/ShimmerUI";
-import { TasksDisplayWindow } from "../Today/today.style";
-import { Popup } from "../AddTask/addTask.style";
+import { auth } from "@/utils/firebase";
+import { priorityColors } from "@/utils/constants";
+import { LoadingState } from "@/components/LoadingState";
+import { TasksDisplayWindow } from "@/components/Pages/Today";
+import { Popup } from "@/components/AddTask";
 
 interface Task {
   name: string;
@@ -21,13 +21,30 @@ interface UpcomingProps {
   handleRefreshTasks: () => void;
 }
 
-const Upcoming: React.FC<UpcomingProps> = ({
+export const Upcoming: React.FC<UpcomingProps> = ({
   refreshTask,
   handleRefreshTasks,
 }) => {
   const [upcomingTasks, setUpcomingTasks] = useState<Task[] | null>(null);
   const totalTasks = upcomingTasks?.filter((task) => task.date !== "today");
   const [showPopup, setShowPopup] = useState<boolean>(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchingAllTasks().then((tasks) => {
+          const sortedTasks = tasks
+            .filter((task) => task.date !== "today")
+            .sort((a, b) => parseInt(a.priority) - parseInt(b.priority));
+          setUpcomingTasks(sortedTasks);
+        });
+        if (refreshTask) {
+          handleRefreshTasks();
+        }
+      }
+    });
+    return () => unsubscribe();
+  }, [refreshTask, handleRefreshTasks]);
 
   const handleDelete = async (taskName: string) => {
     try {
@@ -44,23 +61,6 @@ const Upcoming: React.FC<UpcomingProps> = ({
       console.error("Failed to delete task:", error);
     }
   };
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        retrieveAllTasks().then((tasks) => {
-          const sortedTasks = tasks
-            .filter((task) => task.date !== "today")
-            .sort((a, b) => parseInt(a.priority) - parseInt(b.priority));
-          setUpcomingTasks(sortedTasks);
-        });
-        if (refreshTask) {
-          handleRefreshTasks();
-        }
-      }
-    });
-    return () => unsubscribe();
-  }, [refreshTask, handleRefreshTasks]);
 
   return (
     <div>
@@ -96,7 +96,7 @@ const Upcoming: React.FC<UpcomingProps> = ({
               </UpcomingTasks>
             ))
         ) : (
-          <ShimmerUI />
+          <LoadingState />
         )}
       </TasksDisplayWindow>
       {showPopup && (
@@ -107,5 +107,3 @@ const Upcoming: React.FC<UpcomingProps> = ({
     </div>
   );
 };
-
-export default Upcoming;

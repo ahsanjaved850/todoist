@@ -5,7 +5,7 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { auth, storage } from "../../utils/firebase";
+import { auth, storage } from "@/utils/firebase";
 
 interface Task {
   name: string;
@@ -52,7 +52,7 @@ export const projectTaskUploading = (
   return Promise.resolve(null);
 };
 
-export const retrieveProjectTasks = async (
+export const fetchProjectTasks = async (
   projectName: string | undefined
 ): Promise<Task[]> => {
   const user = auth.currentUser;

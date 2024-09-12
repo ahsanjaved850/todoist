@@ -4,5 +4,11 @@
     {
       "path": "./tsconfig.app.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "baseUrl": ".", // This sets the base URL for module resolution
+    "paths": {
+      "@/*": ["src/*"] // Map '@' to the 'src' folder
+    }
+  }
 }
