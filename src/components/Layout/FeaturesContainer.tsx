@@ -6,7 +6,7 @@ import {
   Project,
   ProjectNameList,
   Today,
-} from "./Layout.style";
+} from "./Layout.style.ts";
 import { FiCalendar, FiHash, FiLogOut, FiPlus, FiUser } from "react-icons/fi";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/utils/firebase";
@@ -45,7 +45,7 @@ export const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
         navigate("/");
       })
       .catch((error) => {
-        console.log();
+        console.log(error);
       });
   };
 
