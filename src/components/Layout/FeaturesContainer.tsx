@@ -45,7 +45,7 @@ export const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        console.log();
       });
   };
 
